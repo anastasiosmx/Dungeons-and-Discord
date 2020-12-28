@@ -1,14 +1,17 @@
 import discord
 import random
 
-TOKEN = ""
+with open('token.txt', 'r') as file:
+    TOKEN = file.read().replace('\n', '')
+file.close()
+
 Client = discord.Client()
 active_channels = {}
 adventures_titles = [
     "Out of the Abyss",
-    "Save the King!",
-    "The dark ring",
-    "Missing children"
+    # "Save the King!",
+    # "The dark ring",
+    # "Missing children"
 ]
 characters = {
      'WARRIOR': {
@@ -74,6 +77,11 @@ characters = {
     }}
 
 
+def story_init(channel_id):
+    active_channels[channel_id]["chapter"] = {}
+    active_channels[channel_id].update({"chapter": 1})
+
+
 def print_characters(char_type):
     char = char_type.upper()
     return(f'''**{char.lower()}**: 
@@ -98,6 +106,21 @@ async def send_welcome_msg(channel):
             To view more info about characters abilities, weapons and background type __^view_char Wizard__ 
             To choose a character type __^choose Wizard__
             To see all available commands type ^help''')
+
+
+async def start_chapter(channel_id, message, option):
+    print(f'function option = {option}')
+    chapter_count = int(active_channels[channel_id]["chapter"])
+
+    with open(f'{active_channels[channel_id]["Title"]}_{chapter_count}_{option}.txt', 'r') as campaign:
+        story = campaign.read()
+    campaign.close()
+
+    await message.channel.send(story)
+
+    chapter_count = 1 + chapter_count
+    chapter_tmp = {"chapter": str(chapter_count)}
+    active_channels[channel_id].update(chapter_tmp)
 
 
 @Client.event
@@ -125,7 +148,7 @@ async def on_message(message):
         1. **^new_game** - Starts a new game.
         2. **^help**     - Prints this message.
         3. **^view_char [class name]** - Prints details about a character.
-        4. **^choose [class name]** - Select character to play with.
+        4. **^choose_char [class name]** - Select character to play with.
         5. **^start** - Starts the game, be sure that everyone chose a class before starting.
         ''')
 
@@ -146,7 +169,7 @@ async def on_message(message):
         char_type = message.content.split()
         await message.channel.send(print_characters(char_type[1]))
 
-    if message.content.startswith('^choose'):
+    if message.content.startswith('^choose_char'):
         client_name = message.author.name
         channel_id = message.channel.id
         channel_name = message.channel.name
@@ -162,5 +185,21 @@ async def on_message(message):
 
         print(active_channels)
         await message.channel.send(f'You chose to play as {char_selected[1]}')
+
+    if message.content.startswith('^start'):
+        channel_id = message.channel.id
+        option_tmp = 1
+
+        story_init(channel_id)
+        await start_chapter(channel_id, message, option_tmp)
+
+    if message.content.startswith('^choose_opt'):
+        channel_id = message.channel.id
+
+        option_tmp = message.content.split()
+        option = option_tmp[1]
+        print(f'Option = {option}')
+
+        await start_chapter(channel_id, message, option)
 
 Client.run(TOKEN)
