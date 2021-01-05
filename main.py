@@ -43,17 +43,19 @@ async def on_message(message):
 
     if message.content.startswith('^start'):
         option_tmp = 1
-        await start_chapter(channel_id, message, option_tmp)
+        start = 1
+        await start_chapter(channel_id, message, option_tmp, start)
 
     if message.content.startswith('^choose_opt'):
+        start = 0
         option_tmp = message.content.split()
         option = option_tmp[1]
-        await start_chapter(channel_id, message, option)
+        await start_chapter(channel_id, message, option, start)
 
     if message.content.startswith('^roll_init'):
         await roll_init(message, channel_id, client_name)
 
-    if message.content.startswith('^start_combat'):
-        await start_combat(message, channel_id, client_name)
+    if message.content.startswith('^init_combat'):
+        await start_combat(message, channel_id)
 
 Client.run(TOKEN)

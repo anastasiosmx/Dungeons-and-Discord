@@ -2,11 +2,14 @@ from data_structures.active_channels import active_channels
 from utilities.story_init import story_init
 
 # TODO Create stop combat --> active_channels[channel_id]['combat_flag'] set to 0 from 1 to unlock story continue
-async def start_chapter(channel_id, message, option):
-    if option == 1:
+async def start_chapter(channel_id, message, option, start):
+    print(start)
+    if start == 1:
+        active_channels[channel_id]['combat_flag'] = {}
         await story_init(channel_id)
 
-    if int(active_channels[channel_id]['combat_flag']) == 1:
+    if active_channels[channel_id]['combat_flag'] == str(1):
+        print('I AM HERE')
         return
 
     chapter_count = int(active_channels[channel_id]["chapter"])

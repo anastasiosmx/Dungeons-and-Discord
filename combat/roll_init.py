@@ -8,4 +8,3 @@ async def roll_init(message, channel_id, client_name):
     active_channels[channel_id][client_name].update({'Roll': str(roll)})
 
     await message.channel.send(f'You rolled {roll}! If everyone rolled their dice type **[^start_combat]**')
-
