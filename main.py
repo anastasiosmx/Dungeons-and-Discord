@@ -6,7 +6,8 @@ from utilities.choose_character import choose_character
 from utilities.start_chapter import start_chapter
 from utilities.print_characters import print_characters
 from combat.roll_init import roll_init
-from combat.start_combat import start_combat
+from combat.init_combat import init_combat
+from combat.attack import attack
 
 
 Client = discord.Client()
@@ -56,6 +57,12 @@ async def on_message(message):
         await roll_init(message, channel_id, client_name)
 
     if message.content.startswith('^init_combat'):
-        await start_combat(message, channel_id)
+        await init_combat(message, channel_id)
+
+    if message.content.startswith('^use'):
+        msg_tmp = message.content.split()
+        attack_type = msg_tmp[1]
+        action = msg_tmp[2]
+        await attack(message, channel_id, client_name, attack_type, action)
 
 Client.run(TOKEN)

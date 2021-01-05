@@ -7,4 +7,6 @@ async def help_msg(message):
             4. **^choose_char [class name]** - Select character to play with.
             5. **^start** - Starts the game, be sure that everyone chose a class before starting.
             6. **^choose_opt [Number]** - Select an option
+            7. **^init_combat** - Starts the combat
+            8. **^com_hlp** - Prints help message on how to combat
             ''')
