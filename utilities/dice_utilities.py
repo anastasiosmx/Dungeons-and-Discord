@@ -4,7 +4,7 @@ from data_structures.monsters import monsters
 
 
 async def get_players_dice(player_class, attack_type, action):
-    dice = characters[player_class.upper()][attack_type][action]
+    dice = characters[player_class.upper()][attack_type.upper()][action.upper()]
     dice_multiplier = dice[0]
     dice_type = dice[2]
 
