@@ -1,17 +1,12 @@
 import random
-from utilities.find_queue import find_queue
+from utilities.reload_queue import reload_queue
 from data_structures.monsters import monsters
 from data_structures.active_channels import active_channels
 
 
 async def init_combat(message, channel_id):
-    queue = await find_queue(channel_id)
+    queue = await reload_queue(channel_id)
     await message.channel.send(f'The queue is: {queue}')
-
-    rounds = len(queue)
-    if 'rounds' not in active_channels[channel_id]:
-        active_channels[channel_id]['rounds'] = {}
-    active_channels[channel_id].update({'rounds': rounds})
 
     monster = random.choice(list(monsters))
     monster_hp = int(monsters[monster]['HP'])

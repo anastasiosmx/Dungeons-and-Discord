@@ -61,8 +61,8 @@ async def on_message(message):
 
     if message.content.startswith('^use'):
         msg_tmp = message.content.split()
-        attack_type = msg_tmp[1]
-        action = msg_tmp[2]
+        attack_type = msg_tmp[1].upper()
+        action = msg_tmp[2].upper()
         await attack(message, channel_id, client_name, attack_type, action)
 
 Client.run(TOKEN)
