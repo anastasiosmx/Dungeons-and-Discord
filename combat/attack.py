@@ -11,7 +11,7 @@ from utilities.reload_queue import reload_queue
 
 async def monster_attack(monster_name, player_hp, channel_id, client_name, message):
     monster_dice_mult, monster_dice_type = await get_monsters_dice(monster_name)
-    monster_attack_chance = await hit_chance()
+    monster_attack_chance = await hit_chance(True)
 
     if monster_attack_chance:
         monster_roll = await roll_attack_dice(monster_dice_mult, monster_dice_type)
@@ -37,7 +37,7 @@ async def attack(message, channel_id, client_name, attack_type, action):
 
     if total_rounds > 0:
         dice_multiplier, dice_type = await get_players_dice(player_class, attack_type, action)
-        attack_chance = await hit_chance()
+        attack_chance = await hit_chance(True)
 
         if attack_chance:
             roll = await roll_attack_dice(dice_multiplier, dice_type)

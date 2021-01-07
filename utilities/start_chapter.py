@@ -8,7 +8,6 @@ async def start_chapter(channel_id, message, option, start):
         await story_init(channel_id)
 
     if active_channels[channel_id]['combat_flag'] == 1:
-        print('I AM HERE')
         return
 
     chapter_count = int(active_channels[channel_id]["chapter"])

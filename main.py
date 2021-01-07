@@ -54,7 +54,7 @@ async def on_message(message):
         await start_chapter(channel_id, message, option, start)
 
     if message.content.startswith('^roll_init'):
-        await roll_init(message, channel_id, client_name)
+        await roll_init(message, channel_id, client_name, True)
 
     if message.content.startswith('^init_combat'):
         await init_combat(message, channel_id)
