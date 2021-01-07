@@ -15,7 +15,7 @@ class TestDeathCheck(unittest.TestCase):
 
         cls.player_hp_neg = -1
         cls.player_hp_pos = 1
-        cls.client_name = 'Test'
+        cls.client_name = 'TestPlayer1'
 
     def test_monster_is_dead_true(self):
         res = asyncio.run(monster_is_dead(self.message, self.channel_id_with_death_flag, self.monster_hp_neg))
